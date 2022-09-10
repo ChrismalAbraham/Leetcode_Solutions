@@ -11,9 +11,10 @@ class Solution:
                 return [True, 0]
             left_check = isSubTreeBalanced(node.left)
             right_check = isSubTreeBalanced(node.right)
+            height = 1 + max(left_check[1], right_check[1])
             if left_check[0] and right_check[0] and abs(left_check[1] - right_check[1]) < 2:
-                return [True, 1 + max(left_check[1], right_check[1])]
+                return [True, height]
             else:
-                return [False, 0]
+                return [False, height]
         return isSubTreeBalanced(root)[0]
             
