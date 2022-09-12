@@ -5,9 +5,8 @@ class Solution:
             if counter == 0:
                 curr = nums[i]
                 counter += 1
-                continue
-            if nums[i] != curr:
+            elif nums[i] != curr:
                 counter -= 1
-            if nums[i] == curr:
+            else:
                 counter += 1
         return curr
