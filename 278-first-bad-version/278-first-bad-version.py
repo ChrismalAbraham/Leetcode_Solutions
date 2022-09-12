@@ -10,4 +10,4 @@ class Solution:
                 end = test
             else:
                 start = test + 1
-        return end
+        return start
