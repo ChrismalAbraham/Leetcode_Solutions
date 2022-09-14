@@ -1,36 +1,21 @@
 import math
 class Solution:
     def addBinary(self, a: str, b: str) -> str:
-        def to_int(char) -> int:
-            return ord(char) - ord('0')
-        
         a, b = a[::-1], b[::-1]
-        
-        if len(a) < len(b):
-            min_s, max_s = a, b
-        else:
-            min_s, max_s = b, a
-        
-        res_arr = []
+        res = []
         carry = 0
         
-        for i in range(len(min_s)):
-            total = to_int(min_s[i]) + to_int(max_s[i]) + carry
-            res_arr.append(str(total % 2))
-            if total > 1:
-                carry = 1
-            else: carry = 0
-                
-        for x in range(len(min_s), len(max_s)):
-            total = to_int(max_s[x]) + carry
-            res_arr.append(str(total % 2))
-            if total > 1:
-                carry = 1
-            else: carry = 0
+        for i in range(max(len(a), len(b))):
+            A = int(a[i]) if i < len(a) else 0
+            B = int(b[i]) if i < len(b) else 0
+            
+            total = A + B + carry
+            char_to_add = str(total % 2)
+            res.append(char_to_add)
+            carry = total // 2
         
-        if carry == 1:
-            res_arr.append("1")
-        res = "".join(res_arr)
-        return res[::-1]
+        if carry:
+            res.append("1")
+        return "".join(res)[::-1]
                 
             
