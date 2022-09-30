@@ -6,17 +6,16 @@
 
 class Solution:
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        def detectCycleStart(head, tor):
-            hare2 = head
-            while hare2:
-                if hare2 == tor: return tor
-                hare2 = hare2.next
-                tor = tor.next
-        if not head: return
-        tor, hare = head, head
+        def find_start(tortoise, head):
+            curr = head
+            while True:
+                if curr == tortoise:
+                    return curr
+                curr, tortoise = curr.next, tortoise.next
+            
+        tortoise, hare = head, head
         while hare and hare.next:
-            tor = tor.next
-            hare = hare.next.next
-            if tor == hare:
-                return detectCycleStart(head, tor)
-        return
+            tortoise, hare = tortoise.next, hare.next.next
+            if tortoise == hare:
+                return find_start(tortoise, head)
+        return None
