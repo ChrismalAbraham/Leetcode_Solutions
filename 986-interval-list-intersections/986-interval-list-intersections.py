@@ -1,19 +1,23 @@
 class Solution:
-    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
-        if len(firstList)==0 or len(secondList)==0:
-            return []
-
-        ans = []
-        i = 0
-        j= 0
-        while i < len(firstList) and j<len(secondList):
-            if firstList[i][0]<=secondList[j][1] and firstList[i][1]>=secondList[j][0]:
-                ans.append([max(firstList[i][0], secondList[j][0]),min(firstList[i][1], secondList[j][1])])
-            
-            if firstList[i][1] <= secondList[j][1]:
-                i+=1
-            else:
-                j+=1
-
+    def intervalIntersection(self, a_arr: List[List[int]], b_arr: List[List[int]]) -> List[List[int]]:
+        if not a_arr or not b_arr: return []
         
-        return ans
+        intersect_intervals = []
+        i, j, start, end = 0, 0, 0, 1
+
+        while i < len(a_arr) and j < len(b_arr):
+
+            is_intersect = a_arr[i][start] <= b_arr[j][end] and a_arr[i][end] >= b_arr[j][start]
+            #b_intersect_a = b_arr[j][start] >= a_arr[i][start] and b_arr[j][start] <= a_arr[i][end]
+
+            if is_intersect:
+                intersect_start = max(a_arr[i][start], b_arr[j][start])
+                intersect_end = min(a_arr[i][end], b_arr[j][end])
+                intersect_intervals.append([intersect_start, intersect_end])
+
+            if a_arr[i][end] < b_arr[j][end]:
+                i += 1
+            else:
+                j += 1
+
+        return intersect_intervals
