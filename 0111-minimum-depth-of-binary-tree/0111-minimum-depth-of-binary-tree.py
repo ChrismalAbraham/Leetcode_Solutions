@@ -16,7 +16,6 @@ class Solution:
             level_len = (len(queue))
             for _ in range(level_len):
                 node = queue.popleft()
-                print(node.val)
                 if node.right is None and node.left is None:
                     return min_depth
 
