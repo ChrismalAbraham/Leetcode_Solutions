@@ -28,6 +28,6 @@ class Solution:
                     queue.append(node.left)
                 if node.right:
                     queue.append(node.right)
-            result.append(list(current_level))
+            result.append(current_level)
             left_to_right = not left_to_right
         return result
