@@ -15,5 +15,3 @@ class Solution:
 
         if self.hasPathSum(root.left, remaining_sum) or self.hasPathSum(root.right, remaining_sum):
             return True
-
-        return False
