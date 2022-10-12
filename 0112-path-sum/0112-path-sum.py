@@ -9,9 +9,8 @@ class Solution:
         if root is None:
             return False
 
-        remaining_sum = target_sum - root.val
-        if remaining_sum == 0 and not root.left and not root.right:
+        if root.val == target_sum and not root.left and not root.right:
             return True
 
-        if self.hasPathSum(root.left, remaining_sum) or self.hasPathSum(root.right, remaining_sum):
+        if self.hasPathSum(root.left, target_sum - root.val) or self.hasPathSum(root.right, target_sum - root.val):
             return True
