@@ -25,11 +25,11 @@ class Solution:
             path_count += count_paths_prefix_sum(current_node.left, target_sum, map, current_path_sum)
             path_count += count_paths_prefix_sum(current_node.right, target_sum, map, current_path_sum)
             
-            value_to_deduct = map[current_path_sum] if map[current_path_sum] else 1
-            map[current_path_sum] = value_to_deduct - 1
+            #value_to_deduct = map[current_path_sum] if map[current_path_sum] else 1
+            map[current_path_sum] = map[current_path_sum] - 1
 
             return path_count
         
-        map = defaultdict(lambda: 0)
+        map = defaultdict(int)
 
         return count_paths_prefix_sum(root, target_sum, map, 0)
