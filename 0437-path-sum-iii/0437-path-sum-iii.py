@@ -18,7 +18,7 @@ class Solution:
             preorder(node.right, c_sum)
             
             prefix_sum[c_sum] -= 1
-            c_sum -= node.val
+            # c_sum -= node.val
             
             
         
