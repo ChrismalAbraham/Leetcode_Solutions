@@ -4,30 +4,32 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+from collections import defaultdict
 class Solution:
-    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
-        def traverse_paths(root, target_sum, nums_to_add):
-            if root is None:
+    def pathSum(self, root: Optional[TreeNode], target_sum: int) -> int:
+        def count_paths_prefix_sum(current_node, target_sum, map, current_path_sum):
+            if current_node is None:
                 return 0
 
-            nums_to_add.append(root.val)
-            valid_paths, path_sum = 0, 0
+            path_count = 0
 
-            for i in range(len(nums_to_add) - 1, -1, -1):
-                path_sum += nums_to_add[i]
-                if path_sum == target_sum:
-                    valid_paths += 1
+            current_path_sum += current_node.val
 
-            valid_paths += traverse_paths(
-                root.left, target_sum, nums_to_add)
-            valid_paths += traverse_paths(
-                root.right, target_sum, nums_to_add)
+            if target_sum == current_path_sum:
+                path_count += 1
 
-            del nums_to_add[-1]
+            path_count += map[current_path_sum - target_sum]
 
-            return valid_paths
+            map[current_path_sum] = map[current_path_sum] + 1
 
-        if root is None:
-            return 0
+            path_count += count_paths_prefix_sum(current_node.left, target_sum, map, current_path_sum)
+            path_count += count_paths_prefix_sum(current_node.right, target_sum, map, current_path_sum)
+            
+            value_to_deduct = map[current_path_sum] if map[current_path_sum] else 1
+            map[current_path_sum] = value_to_deduct - 1
 
-        return traverse_paths(root, targetSum, [])
+            return path_count
+        
+        map = defaultdict(lambda: 0)
+
+        return count_paths_prefix_sum(root, target_sum, map, 0)
