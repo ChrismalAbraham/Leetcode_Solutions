@@ -30,6 +30,6 @@ class Solution:
 
             return path_count
         
-        map = defaultdict(int)
+        map = defaultdict(lambda: 0)
 
         return count_paths_prefix_sum(root, target_sum, map, 0)
