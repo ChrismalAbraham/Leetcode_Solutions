@@ -44,7 +44,7 @@ class Solution:
             # 'current_path_sum' is the prefix sum up to the current node. When we go 
             # back (i.e., backtrack), then the current node is no more a part of the path, hence, we 
             # should remove its prefix sum from the map.
-            map[current_path_sum] = map.get(current_path_sum, 0) - 1
+            map[current_path_sum] = map.get(current_path_sum, 1) - 1
 
             return path_count
 
