@@ -6,25 +6,30 @@
 #         self.right = right
 from collections import defaultdict
 class Solution:
-    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
-        def preorder(node, c_sum):
-            if not node: return
+    def pathSum(self, root: Optional[TreeNode], target_sum: int) -> int:
+        def count_paths_prefix_sum(current_node, target_sum, map, current_path_sum):
+            if current_node is None:
+                return 0
+
+            path_count = 0
+
+            current_path_sum += current_node.val
+
+            if target_sum == current_path_sum:
+                path_count += 1
+
+            path_count += map[current_path_sum - target_sum]
+
+            map[current_path_sum] = map[current_path_sum] + 1
+
+            path_count += count_paths_prefix_sum(current_node.left, target_sum, map, current_path_sum)
+            path_count += count_paths_prefix_sum(current_node.right, target_sum, map, current_path_sum)
             
-            c_sum += node.val
-            self.result += prefix_sum[c_sum - targetSum]
-            prefix_sum[c_sum] += 1
-            
-            preorder(node.left, c_sum)
-            preorder(node.right, c_sum)
-            
-            prefix_sum[c_sum] -= 1
-            # c_sum -= node.val
-            
-            
+            #value_to_deduct = map[current_path_sum] if map[current_path_sum] else 1
+            map[current_path_sum] = map[current_path_sum] - 1
+
+            return path_count
         
-        prefix_sum = defaultdict(int)
-        prefix_sum[0] = 1
-        self.result = 0
-        
-        preorder(root, 0)
-        return self.result
+        map = defaultdict(int)
+
+        return count_paths_prefix_sum(root, target_sum, map, 0)
