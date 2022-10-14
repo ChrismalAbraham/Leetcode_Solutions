@@ -7,29 +7,29 @@
 from collections import defaultdict
 class Solution:
     def pathSum(self, root: Optional[TreeNode], target_sum: int) -> int:
-        def count_paths_prefix_sum(current_node, target_sum, map, current_path_sum):
-            if current_node is None:
+        def traverse_paths(root, target_sum, prefix_sum_map, path_sum):
+            if root is None:
                 return 0
+            valid_paths = 0
+            path_sum += root.val
 
-            path_count = 0
+            if target_sum == path_sum:
+                valid_paths += 1
 
-            current_path_sum += current_node.val
+            # add to valid paths the amount of times target_sum appears in the paths skipped
+            valid_paths += prefix_sum_map[path_sum - target_sum]
 
-            if target_sum == current_path_sum:
-                path_count += 1
+            # add the occurence of this path_sum to our map
+            prefix_sum_map[path_sum] += 1
 
-            path_count += map[current_path_sum - target_sum]
+            valid_paths += traverse_paths(root.left,
+                                          target_sum, prefix_sum_map, path_sum)
+            valid_paths += traverse_paths(root.right,
+                                          target_sum, prefix_sum_map, path_sum)
 
-            map[current_path_sum] = map[current_path_sum] + 1
+            # take out the occurence of this path_sum from the map for backtraking because it's not in the path anymore
+            prefix_sum_map[path_sum] -= 1
+            return valid_paths
 
-            path_count += count_paths_prefix_sum(current_node.left, target_sum, map, current_path_sum)
-            path_count += count_paths_prefix_sum(current_node.right, target_sum, map, current_path_sum)
-            
-            #value_to_deduct = map[current_path_sum] if map[current_path_sum] else 1
-            map[current_path_sum] = map[current_path_sum] - 1
-
-            return path_count
-        
-        map = defaultdict(int)
-
-        return count_paths_prefix_sum(root, target_sum, map, 0)
+        prefix_sum_map = defaultdict(int)
+        return traverse_paths(root, target_sum, prefix_sum_map, 0)
