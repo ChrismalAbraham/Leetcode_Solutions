@@ -1,28 +1,19 @@
 from heapq import *
 class Solution:
-    def findMaximizedCapital(self, numberOfProjects: int, initialCapital: int, profits: List[int], capital: List[int]) -> int:
-        minCapitalHeap = []
-        maxProfitHeap = []
+    def findMaximizedCapital(self, projects: int, curr_capital: int, profits: List[int], capitals: List[int]) -> int:
+        min_capital_heap = []
+        max_profit_heap = []
 
-        # insert all project capitals to a min-heap
-        for i in range(0, len(profits)):
-            heappush(minCapitalHeap, (capital[i], i))
+        for i, capital in enumerate(capitals):
+            heappush(min_capital_heap, [capital, i])
 
-            # let's try to find a total of 'numberOfProjects' best projects
-            availableCapital = initialCapital
-        for _ in range(numberOfProjects):
-        # find all projects that can be selected within the available capital and insert 
-        # them in a max-heap
-            while minCapitalHeap and minCapitalHeap[0][0] <= availableCapital:
-                capital, i = heappop(minCapitalHeap)
-                heappush(maxProfitHeap, (-profits[i], i))
+        for _ in range(projects):
+            while min_capital_heap and min_capital_heap[0][0] <= curr_capital:
+                profit_idx = heappop(min_capital_heap)[1]
+                heappush(max_profit_heap, -profits[profit_idx])
 
-            # terminate if we are not able to find any project that can be completed within the 
-            # available capital
-            if not maxProfitHeap:
+            if not max_profit_heap:
                 break
+            curr_capital += -heappop(max_profit_heap)
 
-            # select the project with the maximum profit
-            availableCapital += -heappop(maxProfitHeap)[0]
-
-        return availableCapital
+        return curr_capital
