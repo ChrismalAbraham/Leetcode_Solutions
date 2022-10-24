@@ -1,17 +1,17 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        def find_permutations(res, index, curr_permutation, nums):
+        def find_permutations(nums, res, curr_permutation, index):
             if index == len(nums):
                 res.append(curr_permutation)
             else:
-                for j in range(len(curr_permutation) + 1):
+                for i in range(len(curr_permutation) + 1):
                     new_permutation = list(curr_permutation)
-                    new_permutation.insert(j, nums[index])
-                    find_permutations(res, index + 1, new_permutation, nums)
-        res = []
-        find_permutations(res, 0, [], nums)
-        return res
+                    new_permutation.insert(i, nums[index])
+                    find_permutations(nums, res, new_permutation, index + 1)
         
+        res = []
+        find_permutations(nums, res, [], 0)
+        return res
         
 #         res = []
 #         len_nums = len(nums)
