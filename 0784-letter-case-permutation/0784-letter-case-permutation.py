@@ -10,8 +10,7 @@ class Solution:
                 return char.upper()
             return char.lower()
 
-        res = []
-        res.append(arr)
+        res = [arr]
         pos_of_char = []
         for i, char in enumerate(arr):
             if is_letter(char):
