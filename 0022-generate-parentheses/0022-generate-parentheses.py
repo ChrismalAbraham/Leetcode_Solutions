@@ -20,8 +20,7 @@ class Solution:
                         curr.string + '(', curr.open_paran + 1, curr.closed_paran))
 
                 if curr.closed_paran < curr.open_paran:
-                    new_string = curr.string + ')'
                     queue.append(ParanthesisString(
-                        curr.string + ')' , curr.open_paran, curr.closed_paran + 1))
+                        curr.string + ')', curr.open_paran, curr.closed_paran + 1))
 
         return res
