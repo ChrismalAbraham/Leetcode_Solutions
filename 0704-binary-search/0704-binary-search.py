@@ -1,39 +1,21 @@
 class Solution:
     def search(self, nums: List[int], key: int) -> int:
-        if not nums:
-            return -1
-        descending = False
-        if len(nums) > 1 and nums[-1] < nums[1]:
-            descending = True
-        left, right = 0, len(nums) - 1
-        while left <= right:
-            mid = (left + right) // 2
+        start, end = 0, len(nums) - 1
+        is_ascending = nums[start] < nums[end]
+        while start <= end:
+            mid = (start + end) // 2
             if nums[mid] == key:
                 return mid
             else:
-                if not descending:
+                if is_ascending:
                     if key > nums[mid]:
-                        left = mid + 1
+                        start = mid + 1
                     else:
-                        right = mid - 1
+                        end = mid - 1
                 else:
                     if key < nums[mid]:
-                        left = mid + 1
+                        start = mid + 1
                     else:
-                        right = mid - 1
-
+                        end = mid - 1
         return -1
-        
-        
-        
-        # l, r = 0, len(nums) - 1
-        # while l <= r:
-        #     mid = l + (r - l) // 2
-        #     if nums[mid] < target:
-        #         l = mid + 1
-        #     elif nums[mid] > target:
-        #         r = mid - 1
-        #     else:
-        #         return mid
-        # return -1
             
