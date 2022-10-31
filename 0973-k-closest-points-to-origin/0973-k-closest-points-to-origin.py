@@ -9,7 +9,7 @@ class Solution:
             if calc_distance(points[i]) < -max_heap[0][0]:
                 heappop(max_heap)
                 heappush(max_heap, (-calc_distance(points[i]), points[i][0], points[i][1]))
-        return [[x, y] for d, x, y in max_heap]
+        return [(x, y) for (d, x, y) in max_heap]
     
         # heap = []
         #     for (x,y) in points:
