@@ -10,3 +10,13 @@ class Solution:
                 heappop(max_heap)
                 heappush(max_heap, (-calc_distance(points[i]), points[i][0], points[i][1]))
         return [[x, y] for d, x, y in max_heap]
+    
+        # heap = []
+        #     for (x,y) in points:
+        #         dist = -(x*x + y*y)
+        #         if len(heap) == k:
+        #             heapq.heappushpop(heap, (dist, x, y))
+        #         else:
+        #             heapq.heappush(heap, (dist, x, y))
+        #     print(heap)
+        #     return [(x,y) for (dist,x, y) in heap]
