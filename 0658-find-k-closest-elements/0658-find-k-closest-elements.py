@@ -1,21 +1,28 @@
 class Solution:
     def findClosestElements(self, nums: List[int], k: int, x: int) -> List[int]:
-        def distance(elem: int) -> int:
-            nonlocal x
-            return abs(elem - x)
+        def binary_search(nums, x):
+            start, end = 0, len(nums) - 1
+            while start <= end:
+                mid = start + (end - start) // 2
+                if x < nums[mid]:
+                    end = mid - 1
+                elif x > nums[mid]:
+                    start = mid + 1
+                else:
+                    return mid
+            return mid
 
-        max_heap = []
-        for i in range(k):
-            heappush(max_heap, (-distance(nums[i]), nums[i]))
+        closest_index_to_k = binary_search(nums, x)
+        high, low = closest_index_to_k + k, closest_index_to_k - k
+        # don't want the ends of our ranges to be outside the array bounds when indexing
+        high, low = min(high, len(nums) - 1), max(low, 0)
 
-        for i in range(k, len(nums)):
-            num_dist = distance(nums[i])
-            if num_dist < -max_heap[0][0]:
-                heappop(max_heap)
-                heappush(max_heap, (-distance(nums[i]), nums[i]))
-
+        min_heap = []
+        for i in range(low, high + 1):
+            heappush(min_heap, (abs(nums[i] - x), nums[i]))
+        
         res = []
-        for dist, num in max_heap:
-            res.append(num)
+        for i in range(k):
+            res.append(heappop(min_heap)[1])
         res.sort()
         return res
