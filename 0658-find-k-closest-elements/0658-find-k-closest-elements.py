@@ -10,7 +10,7 @@ class Solution:
                     start = mid + 1
                 else:
                     return mid
-            return end if end > -1 else 0
+            return end if end > -1 else 0 # if num does not exist in array then end will always points to the number directly less than target
 
         def dist(num):
             nonlocal target
