@@ -22,18 +22,18 @@ class Solution:
         queue = deque()
 
         while len(queue) < nums_of_elem:
-            if left < 0:
+            if left < 0: # first 2 if conditions are out of bounds checks
                 queue.append(nums[right])
                 right += 1
             elif right >= len(nums):
                 queue.appendleft(nums[left])
                 left -= 1
-            elif dist(nums[left]) > dist(nums[right]):
-                queue.append(nums[right])
-                right += 1
-            else:
+            elif dist(nums[left]) <= dist(nums[right]): # if distance is equal append left
                 queue.appendleft(nums[left])
                 left -= 1
+            else:
+                queue.append(nums[right])
+                right += 1
 
         return queue
 
