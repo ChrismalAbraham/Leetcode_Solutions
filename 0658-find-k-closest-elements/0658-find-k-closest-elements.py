@@ -28,12 +28,12 @@ class Solution:
             elif right >= len(nums):
                 queue.appendleft(nums[left])
                 left -= 1
-            elif dist(nums[left]) <= dist(nums[right]):
-                queue.appendleft(nums[left])
-                left -= 1
-            else:
+            elif dist(nums[left]) > dist(nums[right]):
                 queue.append(nums[right])
                 right += 1
+            else:
+                queue.appendleft(nums[left])
+                left -= 1
 
         return queue
 
