@@ -10,9 +10,7 @@ class Solution:
                     start = mid + 1
                 else:
                     return mid
-            if start > 0:
-                return start -1
-            return start
+            return end if end > -1 else 0
 
         def dist(num):
             nonlocal target
